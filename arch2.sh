@@ -1,10 +1,13 @@
 #!/bin/bash
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Конфигурируемое
 read -p "Введите имя компьютера: " hostname
 read -p "Введите имя пользователя: " username
 
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
-ln -svf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
+
+echo 'Настроим часы' 
+ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 echo '3.4 Добавляем русскую локаль системы'
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
@@ -23,6 +26,7 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 echo 'Создадим загрузочный RAM диск'
 mkinitcpio -p linux
 
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Конфигурируемое
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy
 pacman -S grub --noconfirm 
@@ -37,6 +41,7 @@ pacman -S dialog wpa_supplicant --noconfirm
 echo 'Добавляем пользователя'
 useradd -m -g users -G wheel -s /bin/bash $username
 
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Конфигурируемое
 echo 'Создаем root пароль'
 passwd
 
