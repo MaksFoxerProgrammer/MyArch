@@ -76,7 +76,8 @@ if [[ $vm_setting == 1 ]]; then
     pacman -S pacman -S i3-wm polybar dmenu pcmanfm ttf-font-awesome feh gvfs udiskie xorg-xbacklight ristretto tumbler compton jq --noconfirm
     yay -S polybar ttf-weather-icons ttf-clear-sans
     # wget https://github.com/ordanax/arch/raw/master/attach/config_i3wm.tar.gz
-    wget https://github.com/ordanax/arch/raw/master/attach/config_i3wm.tar.gz
+    # wget https://github.com/ordanax/arch/raw/master/attach/config_i3wm.tar.gz
+    wget https://github.com/MaksFoxerProgrammer/MyArch/raw/main/attach/config_i3wm.tar.gz
     sudo rm -rf ~/.config/i3/*
     sudo rm -rf ~/.config/polybar/*
     sudo tar -xzf config_i3wm.tar.gz -C ~/
@@ -88,7 +89,8 @@ echo 'Установить conky?'
 read -p "1 - Да, 0 - Нет: " conky_set
 if [[ $conky_set == 1 ]]; then
   sudo pacman -S conky conky-manager --noconfirm
-  wget git.io/conky.tar.gz
+  # wget git.io/conky.tar.gz
+  wget https://github.com/MaksFoxerProgrammer/MyArch/raw/main/attach/conky.tar.gz
   tar -xzf conky.tar.gz -C ~/
 elif [[ $conky_set == 0 ]]; then
   echo 'Установка conky пропущена.'

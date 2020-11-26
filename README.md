@@ -22,12 +22,12 @@ Cостоит из 3 частей.
 2) Скачать и запустить скрипт командой:
 
    ```bash 
-   wget git.io/arch1.sh && sh arch1.sh
+   wget git.io/myarch1.sh && sh arch1.sh
    ```
    или
    
     ```bash
-   curl -OL git.io/arch1.sh && sh arch1.sh
+   curl -OL git.io/myarch1.sh && sh arch1.sh
    ```
    
    Запустится установка минимальной системы.
@@ -40,7 +40,7 @@ Cостоит из 3 частей.
    Установка 3-й части производится из терминала командой:
    
    ```bash 
-   wget git.io/arch3.sh && sh arch3.sh
+   wget git.io/myarch3.sh && sh arch3.sh
    ```
 
 # Настройка скрипта под себя
