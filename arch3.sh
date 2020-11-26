@@ -43,7 +43,8 @@ if [[ $xfce_set == 1 ]]; then
   # Предварительно можно очистить конфиг от всего лишнего
   # tar -czf config.tar.gz .config
   # Выгрузите архив в интернет и скорректируйте ссылку на свою.
-  wget https://github.com/ordanax/arch/raw/master/attach/config.tar.gz
+  # wget https://github.com/ordanax/arch/raw/master/attach/config.tar.gz
+  wget https://github.com/MaksFoxerProgrammer/MyArch/raw/main/attach/config.tar.gz
   sudo rm -rf ~/.config/xfce4/*
   sudo tar -xzf config.tar.gz -C ~/
   echo 'Удаление тем по умолчанию'
@@ -53,14 +54,16 @@ if [[ $xfce_set == 1 ]]; then
   sudo pacman -S capitaine-cursors --noconfirm
   
   echo 'Ставим лого ArchLinux в меню'
-  wget git.io/arch_logo.png
+  # wget git.io/arch_logo.png
+  wget https://github.com/MaksFoxerProgrammer/MyArch/raw/main/attach/archlinux_logo.png
   sudo mv -f ~/downloads/arch_logo.png /usr/share/pixmaps/arch_logo.png
   
   echo 'Удаляем лишнее из xfce4'
   sudo pacman -Rs xfburn orage parole mousepad xfce4-appfinder xfce4-clipman-plugin xfce4-timer-plugin xfce4-time-out-plugin xfce4-artwork xfce4-taskmanager xfce4-smartbookmark-plugin xfce4-sensors-plugin xfce4-screenshooter xfce4-notes-plugin xfce4-netload-plugin xfce4-mpc-plugin xfce4-mount-plugin xfce4-mailwatch-plugin xfce4-genmon-plugin xfce4-fsguard-plugin xfce4-eyes-plugin xfce4-diskperf-plugin xfce4-dict xfce4-cpugraph-plugin xfce4-cpufreq-plugin
 
   echo 'Ставим обои на рабочий стол'
-  wget git.io/bg.jpg
+  # wget git.io/bg.jpg
+  wget https://github.com/MaksFoxerProgrammer/MyArch/raw/main/attach/bg.jpg
   sudo rm -rf /usr/share/backgrounds/xfce/* #Удаляем стандартные обои
   sudo mv -f ~/downloads/bg.jpg /usr/share/backgrounds/xfce/bg.jpg
 elif [[ $xfce_set == 0 ]]; then
@@ -72,6 +75,7 @@ read -p "1 - Да, 2 - Нет: " vm_setting
 if [[ $vm_setting == 1 ]]; then
     pacman -S pacman -S i3-wm polybar dmenu pcmanfm ttf-font-awesome feh gvfs udiskie xorg-xbacklight ristretto tumbler compton jq --noconfirm
     yay -S polybar ttf-weather-icons ttf-clear-sans
+    # wget https://github.com/ordanax/arch/raw/master/attach/config_i3wm.tar.gz
     wget https://github.com/ordanax/arch/raw/master/attach/config_i3wm.tar.gz
     sudo rm -rf ~/.config/i3/*
     sudo rm -rf ~/.config/polybar/*
