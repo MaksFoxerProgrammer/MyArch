@@ -1,0 +1,249 @@
+MyLiveArchManual
+========================================================================================
+
+Разметка диска: lsblk -f
+
+Создание разделов
+Небольшой шаблон разметки, который будет использован далее по тексту:
+Примечание: В скобках показаны данные, использовавшиеся в примере. Т.е. могут отличаться от Ваших данных и предпочтений.
+1. FTEMP fat32 (1 Гб)
+2. FBOOT /boot ext2 50 - 100 Мб
+3. FROOT / btrfs или ext2 Все остальное (~6.5 Гб)
+
+И монтируем в /mnt
+
+pacstrap /mnt base linux linux-headers dhcpcd which netctl inetutils  base-devel  wget linux-firmware  nano wpa_supplicant dialog
+genfstab -pU /mnt >> /mnt/etc/fstab
+
+Приводим /etc/mkinitcpio.conf (/mnt/etc/mkinitcpio.conf) новой системы к сл. содержанию. Находим параметры HOOKS и убираем autodetect (необходимо, чтобы загрузочный образ не был привязан к железкам, на которых производится сборка). Остальное меняем на свой лад.
+
+	HOOKS="base udev modconf block filesystems keyboard fsck"
+	...
+	COMPRESSION="xz"
+
+Также чтобы на флешку записывалось меньше данных, можно монтировать /var/tmp и /var/log в оперативную память. Для этого добавляем в fstab строки:
+
+	tmpfs /tmp   tmpfs   nodev,nosuid   0   0
+	tmpfs /var/tmp tmpfs defaults 0 0
+	tmpfs /var/log tmpfs defaults 0 0
+
+arch-chroot /mnt
+
+pacman -S grub
+grub-install /dev/sdb
+grub-mkconfig -o /boot/grub/grub.cfg
+
+timedatectl set-ntp true
+pacman -Syyu  --noconfirm
+
+echo Arch > /etc/hostname
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+
+echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf 
+echo "KEYMAP=ru" >> /etc/vconsole.conf
+echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+
+
+
+
+passwd
+useradd -m -g users -G wheel -s /bin/bash maks
+passwd maks
+
+
+
+pacman -Syy  --noconfirm
+clear
+lsblk -f
+
+
+
+pacman -S grub   --noconfirm
+lsblk -f
+
+grub-install /dev/sdb
+grub-mkconfig -o /boot/grub/grub.cfg
+
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+
+echo '[multilib]' >> /etc/pacman.conf
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+
+
+pacman -Sy xorg-server xorg-drivers --noconfirm
+
+pacman -Syy
+pacman -S gnome gnome-extra  --noconfirm
+
+pacman -S i3 i3-wm i3status  dmenu  --noconfirm
+pacman -Sy nitrogen  --noconfirm
+
+
+pacman -S gdm --noconfirm
+systemctl enable gdm.service -f
+
+
+pacman -Sy networkmanager networkmanager-openvpn network-manager-applet ppp --noconfirm
+systemctl enable NetworkManager.service
+
+
+systemctl enable dhcpcd.service
+
+pacman -Sy pulseaudio-bluetooth alsa-utils pulseaudio-equalizer-ladspa   --noconfirm
+systemctl enable bluetooth.service
+
+pacman -Sy exfat-utils ntfs-3g   --noconfirm
+
+pacman -Sy unzip unrar lha file-roller p7zip unace lrzip  --noconfirm
+
+pacman -S gvfs-afc gvfs-mtp --noconfirm
+
+pacman -S blueman --noconfirm
+
+pacman -S htop xterm --noconfirm
+
+pacman -S filezilla --noconfirm
+
+pacman -S neofetch  --noconfirm
+
+pacman -S vlc  --noconfirm
+
+pacman -S gparted  --noconfirm
+
+pacman -S telegram-desktop   --noconfirm
+
+pacman -S spectacle flameshot --noconfirm
+
+pacman -S  ttf-arphic-ukai git ttf-liberation ttf-dejavu ttf-arphic-uming ttf-fireflysung ttf-sazanami --noconfirm
+
+pacman -S firefox firefox-i18n-ru --noconfirm 
+
+pacman -S chromium --noconfirm
+
+pacman -S libreoffice-still libreoffice-still-ru --noconfirm
+
+pacman -S openssh --noconfirm
+
+pacman -Sy --noconfirm
+
+
+
+cd /home/maks
+git clone https://aur.archlinux.org/yay.git
+chown -R maks:users /home/maks/yay
+chown -R maks:users /home/maks/yay/PKGBUILD 
+cd /home/maks/yay  
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/yay
+clear
+
+
+d /home/maks 
+git clone https://aur.archlinux.org/teamviewer.git
+chown -R maks:users /home/maks/teamviewer
+chown -R maks:users /home/maks/teamviewer/PKGBUILD 
+cd /home/maks/teamviewer  
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/teamviewer
+systemctl enable teamviewerd.service
+
+
+
+
+cd /home/maks
+git clone https://aur.archlinux.org/gconf.git 
+chown -R maks:users /home/maks/gconf
+chown -R maks:users /home/maks/gconf/PKGBUILD 
+cd /home/maks/gconf  
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/gconf
+
+
+cd /home/maks
+git clone https://aur.archlinux.org/vk-messenger.git
+chown -R maks:users /home/maks/vk-messenger
+chown -R maks:users /home/maks/vk-messenger/PKGBUILD 
+cd /home/maks/vk-messenger  
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/vk-messenger
+
+
+
+cd /home/maks
+git clone https://aur.archlinux.org/alsi.git
+chown -R maks:users /home/maks/alsi
+chown -R maks:users /home/maks/alsi/PKGBUILD 
+cd /home/maks/alsi  
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/alsi
+
+
+
+cd /home/maks
+ git clone https://aur.archlinux.org/pamac-aur.git
+chown -R maks:users /home/maks/pamac-aur
+chown -R maks:users /home/maks/pamac-aur/PKGBUILD 
+cd /home/maks/pamac-aur
+sudo -u maks  makepkg -si --noconfirm  
+rm -Rf /home/maks/pamac-aur
+
+
+sudo pacman -S --needed base-devel git wget yajl
+cd /tmp
+git clone https://aur.archlinux.org/package-query.git
+cd package-query/
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt/
+makepkg -si
+cd ..
+sudo rm -dR yaourt/ package-query/
+
+
+
+mkdir /home/maks/{Downloads,Music,Pictures,Videos,Documents,time}   
+  chown -R maks:users  /home/maks/{Downloads,Music,Pictures,Videos,Documents,time}
+
+
+
+
+
+
+
+
+############################# Установка sublime-text
+
+
+
+ Install the GPG key:
+
+curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
+
+Select the channel to use:
+
+Stable
+
+    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf
+
+Dev
+
+    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/dev/x86_64" | sudo tee -a /etc/pacman.conf
+
+Update pacman and install Sublime Text
+
+sudo pacman -Syu sublime-text
+
+
+
+
+
+
+
+
+
+
