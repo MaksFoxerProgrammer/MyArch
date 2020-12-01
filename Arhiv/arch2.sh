@@ -27,7 +27,7 @@ echo 'Создадим загрузочный RAM диск'
 mkinitcpio -p linux
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Конфигурируемое
-echo '3.5 Устанавливаем загрузчик'
+echo '3.5 Уузчик'
 pacman -Syy
 pacman -S grub --noconfirm 
 grub-install /dev/sda

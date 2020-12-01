@@ -25,31 +25,22 @@ echo '2.4 создание разделов'
   echo;
   echo;
   echo;
-  echo +20G;
-
-  echo n;
-  echo p;
   echo;
-  echo;
-  echo a;
-  echo 1;
 
   echo w;
-) | fdisk /dev/sda
+) | fdisk /dev/sde
 
 echo 'Ваша разметка диска'
 fdisk -l
 
 echo '2.4.2 Форматирование дисков'
-mkfs.ext2  /dev/sda1 -L boot
-mkfs.ext4  /dev/sda2 -L root
-mkfs.ext4  /dev/sda3 -L home
+mkfs.ext2  /dev/sde1 -L boot
+mkfs.ext4  /dev/sde2 -L root
 
 echo '2.4.3 Монтирование дисков'
-mount /dev/sda2 /mnt
-mkdir /mnt/{boot,home}
-mount /dev/sda1 /mnt/boot
-mount /dev/sda3 /mnt/home
+mount /dev/sde2 /mnt
+mkdir /mnt/boot
+mount /dev/sde1 /mnt/boot
 
 echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
@@ -60,4 +51,4 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano dhcpcd net
 echo '3.3 Настройка системы'
 genfstab -pU /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt  sh -c "$(curl -fsSL git.io/myarch3.sh)"
+arch-chroot /mnt  sh -c "$(curl -fsSL git.io/myarch2.sh)"
