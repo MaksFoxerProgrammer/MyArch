@@ -1,14 +1,14 @@
 ##############################################
-# ArchLinux Fast Install v1.6
+# ArchLinux Fast Install
 ##############################################
 
-# Важно!!!
-Это форк от https://github.com/ordanax/arch2018, редактированный под собственные нужды
+# Важно
+За основу брались скрипты https://github.com/ordanax/arch2018, https://github.com/poruncov/archlinux-script-install
+Моя версия переписана под pyhon3
 
-# Описание
-
-
-# Установка 
+# Установка
+- Запуск install1() для установки окружения
+- Запуск install2() для конечной установки и настройки системы 
 
 
 # Настройка скрипта под себя
@@ -25,15 +25,15 @@
 Смотрите пометки в самом скрипте.
 
 # В разработке принимали участие:
-Алексей Бойко https://vk.com/ordanax
+Скрипты, взятые за основу:
+    Алексей Бойко https://vk.com/ordanax
+    Степан Скрябин https://vk.com/zurg3
+    Михаил Сарвилин https://vk.com/michael170707
+    Данил Антошкин https://vk.com/danil.antoshkin
+    Юрий Порунцов https://vk.com/poruncov
 
-Степан Скрябин https://vk.com/zurg3
-
-Михаил Сарвилин https://vk.com/michael170707
-
-Данил Антошкин https://vk.com/danil.antoshkin
-
-Юрий Порунцов https://vk.com/poruncov
+Обновленная версия:
+    Зубко Максим
 
 # Контакты
 Наша группа по Arch Linux https://vk.com/arch4u

@@ -1,1 +1,1 @@
-__all__ = ['fun', 'GenArch']
+__all__ = ['fun', 'GenArch', 'ArchLinuxInstall']
