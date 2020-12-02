@@ -80,7 +80,7 @@ class ArchLinuxInstall(object):
             =============================================================================
 
             После остановки, выполнить 2-ю часть!
-            git clone https://github.com/MaksFoxerProgrammer/MyArch.git && cd MyArch $$ python3 Arch/pac/ArchLinuxInstall.py
+            git clone https://github.com/MaksFoxerProgrammer/MyArch.git && cd MyArch && sudo python3 Arch/pac/ArchLinusInstall.py
         """)
 
         os.system('arch-chroot /mnt')
@@ -110,11 +110,14 @@ class ArchLinuxInstall(object):
     def users(self):
         os.system('clear')
         print('\tНастроим пользователя...')
+        os.system('useradd -m -g users -G wheel -s /bin/bash ' + self.user)
+
         print('\tНастроим пароль ' + self.user + ': ')
         os.system('passwd ' + self.user)
+
         print('\tНастроим пароль админа: ')
         os.system('passwd')
-        os.system('useradd -m -g users -G wheel -s /bin/bash ' + self.user)
+        
         os.system('echo \'%wheel ALL=(ALL) NOPASSWD: ALL\' >> /etc/sudoers')
 
 
