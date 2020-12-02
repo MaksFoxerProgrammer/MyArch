@@ -53,7 +53,7 @@ class ArchLinuxInstall(object):
 
         print('\n\tВаша разметка дисков:')
         os.system('lsblk /dev/' + sd)
-        input()
+        input('\n\n\tНажимте Enter для продолжения...')
 
 
 
@@ -81,6 +81,7 @@ class ArchLinuxInstall(object):
 
             После остановки, выполнить 2-ю часть!
             git clone https://github.com/MaksFoxerProgrammer/MyArch.git && cd MyArch && sudo python3 Arch/pac/ArchLinusInstall.py
+            Выбираем ВТОРОЙ пункт меню !
         """)
 
         os.system('arch-chroot /mnt')
@@ -109,13 +110,13 @@ class ArchLinuxInstall(object):
 
     def users(self):
         os.system('clear')
-        print('\tНастроим пользователя...')
+        print('\tНастроим пользователя...\n\n')
         os.system('useradd -m -g users -G wheel -s /bin/bash ' + self.user)
 
         print('\tНастроим пароль ' + self.user + ': ')
         os.system('passwd ' + self.user)
 
-        print('\tНастроим пароль админа: ')
+        print('\n\n\tНастроим пароль админа: ')
         os.system('passwd')
         
         os.system('echo \'%wheel ALL=(ALL) NOPASSWD: ALL\' >> /etc/sudoers')
@@ -124,19 +125,19 @@ class ArchLinuxInstall(object):
 
     def grub(self):
         os.system('clear')
-        print('\tСтавим загрузчик...')
+        print('\tСтавим загрузчик...\n\n')
         os.system('pacman -S grub   --noconfirm')
         os.system('grub-install /dev/' + self.sd)
         os.system('grub-mkconfig -o /boot/grub/grub.cfg')
 
-        print('\n\n\tСтавим xorg...')
+        print('\n\n\tСтавим xorg...\n\n')
         os.system('pacman -Sy xorg-server xorg-drivers --noconfirm')
 
 
 
     def network(self):
         os.system('clear')
-        print('\tСтавим сеть...')
+        print('\tСтавим сеть...\n\n')
         os.system('pacman -Sy networkmanager networkmanager-openvpn network-manager-applet ppp dialog wpa_supplicant --noconfirm')
         os.system('systemctl enable NetworkManager.service')
         os.system('systemctl enable dhcpcd.service')
@@ -145,7 +146,7 @@ class ArchLinuxInstall(object):
 
     def time(self):
         os.system('clear')
-        print('\tСтавим время и имя компьютера...')
+        print('\tСтавим время и имя компьютера...\n\n')
         os.system('timedatectl set-ntp true')
         os.system('echo ' + self.comp + ' > /etc/hostname')
         os.system('ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime')
@@ -154,7 +155,7 @@ class ArchLinuxInstall(object):
 
     def language(self):
         os.system('clear')
-        print('\tСтавим язык системы...')
+        print('\tСтавим язык системы...\n\n')
         os.system('echo "en_US.UTF-8 UTF-8" > /etc/locale.gen')
         os.system('echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen')
         os.system('locale-gen')
@@ -166,14 +167,14 @@ class ArchLinuxInstall(object):
 
     def repos(self):
         os.system('clear')
-        print('\tДобавляем необходимые репозитории...')
+        print('\tДобавляем необходимые репозитории...\n\n')
         os.system('echo \'[multilib]\' >> /etc/pacman.conf')
         os.system('echo \'Include = /etc/pacman.d/mirrorlist\' >> /etc/pacman.conf')
 
 
     def fonts(self):
         os.system('clear')
-        print('\tСтавим шрифты...')
+        print('\tСтавим шрифты...\n\n')
         os.system('pacman -S  ttf-arphic-ukai git ttf-liberation ttf-dejavu ttf-arphic-uming ttf-fireflysung ttf-sazanami --noconfirm')
 
 
@@ -182,7 +183,7 @@ class ArchLinuxInstall(object):
         os.system('clear')
         os.system('mkdir ~/downloads')
         os.system('cd ~/downloads')
-        print('\tУстановка AUR (yay)')
+        print('\tУстановка AUR (yay)\n\n')
         os.system('sudo pacman -Syu')
         os.system('sudo pacman -S wget --noconfirm')
         os.system('wget git.io/yay-install.sh && sh yay-install.sh --noconfirm')
@@ -197,14 +198,14 @@ class ArchLinuxInstall(object):
         # os.system('pacman -S gnome gnome-extra  --noconfirm')
         os.system('cd ~/downloads')
 
-        print('\n\tСтавим XFCE...')
+        print('\n\tСтавим XFCE...\n\n')
         os.system('pacman -S xfce4 xfce4-goodies --noconfirm')
 
-        print('\n\tСтавим i3...')
+        print('\n\tСтавим i3...\n\n')
         os.system('pacman -S i3 i3-wm i3status  dmenu  --noconfirm')
         os.system('pacman -Sy nitrogen  --noconfirm')
 
-        print('\n\tСтавим gdm...')
+        print('\n\tСтавим gdm...\n\n')
         os.system('pacman -S gdm --noconfirm')
         os.system('systemctl enable gdm.service -f')
         """
@@ -255,7 +256,7 @@ class ArchLinuxInstall(object):
 
     def mainPrograms(self):
         os.system('clear')
-        print('\tСтавим основные приложения...')
+        print('\tСтавим основные приложения...\n\n')
         os.system('pacman -Sy pulseaudio-bluetooth alsa-utils pulseaudio-equalizer-ladspa   --noconfirm')
         os.system('systemctl enable bluetooth.service')
 
@@ -263,7 +264,7 @@ class ArchLinuxInstall(object):
 
     def utilities(self):
         os.system('clear')
-        print('\tСтавим утилиты...')
+        print('\tСтавим утилиты...\n\n')
         os.system('''
         pacman -Sy exfat-utils ntfs-3g   --noconfirm
         pacman -Sy exfat-utils ntfs-3g   --noconfirm
@@ -277,7 +278,7 @@ class ArchLinuxInstall(object):
 
     def customApplication(self):
         os.system('clear')
-        print('\tСтавим пользовательские приложения...')
+        print('\tСтавим пользовательские приложения...\n\n')
         os.system('pacman -S neofetch  --noconfirm')
         os.system('pacman -S vlc  --noconfirm')
         os.system('pacman -S gparted  --noconfirm')
@@ -291,13 +292,13 @@ class ArchLinuxInstall(object):
         os.system('sudo pacman -S --needed base-devel git wget yajl')
         os.system('curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg')
         os.system('    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf')
-        os.system('sudo pacman -Syu sublime-text')
+        os.system('sudo pacman -Syu sublime-text --noconfirm')
 
 
 
     def additionalApplication(self):
         os.system('clear')
-        print('\tОстальные приложения\n')
+        print('\tОстальные приложения\n\n')
         os.system('''
         cd /home/''' + self.user + '''
         git clone https://aur.archlinux.org/vk-messenger.git
@@ -311,7 +312,7 @@ class ArchLinuxInstall(object):
 
     def gitsett(self):
         os.system('clear')  
-        print('\tНастраиваем git')
+        print('\tНастраиваем git\n\n')
         os.system('''
         git config --global user.name "maks"
         git config --global user.email "maksim.z.2000@mail.ru"
@@ -346,8 +347,8 @@ class ArchLinuxInstall(object):
         self.mainPrograms()
         self.utilities()
         self.customApplication()
-        additionalApplication()
-        # self.gitsett()
+        self.additionalApplication()
+        self.gitsett()
 
 
 
