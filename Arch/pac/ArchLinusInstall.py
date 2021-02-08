@@ -9,6 +9,60 @@ class ArchLinuxInstall(object):
     sd = ''
     user = ''
     comp = ''
+    instforbase = [
+            'python3', 
+            'git', 
+            'base', 
+            'linux', 
+            'linux-firmware', 
+            'linux-headers', 
+            'dhcpcd', 
+            'which', 
+            'netctl', 
+            'inetutils', 
+            'base-devel', 
+            'wget', 
+            'linux-firmware', 
+            'nano', 
+            'wpa_supplicant', 
+            'dialog sudo'
+        ] 
+    
+    instfori3 = [
+            'i3', 
+            'i3-gaps', 
+            'base-devel', 
+            'rofi', 
+            'okular', 
+            'feh', 
+            'vim', 
+            'code', 
+            'picom', 
+            'kitty', 
+            'ranger', 
+            'git', 
+            'xdotool', 
+            'xautolock', 
+            'i3lock-color', 
+            'scrot', 
+            'imagemagick', 
+            'rxvt-unicode', 
+            'urxvt-perls', 
+            'xorg-server', 
+            'xorg-xinit'
+        ]
+
+    def inst(ar):
+        rez = ' '
+        for item in ar:
+            rez = rez + item
+        return rez
+
+os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfirm')
+        os.system('pacman -S bluez bluez-utils pulseaudio-bluetooth blueman --noconfirm')
+        os.system('pacman -S i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls --noconfirm')
+        os.system('pacman -Sy nitrogen  --noconfirm')
+
 
 
     def hi(self):
@@ -61,7 +115,7 @@ class ArchLinuxInstall(object):
         os.system('clear')
         print('\tБазовая установка окружения\n\n')
         os.system('''
-        pacstrap /mnt python3 git base linux linux-headers dhcpcd which netctl inetutils  base-devel  wget linux-firmware nano wpa_supplicant dialog
+        pacstrap /mnt ''' + self.instoforbase + '''
         genfstab -pU /mnt >> /mnt/etc/fstab''')
 
         print("""
@@ -202,7 +256,9 @@ class ArchLinuxInstall(object):
         os.system('pacman -S xfce4 xfce4-goodies --noconfirm')
 
         print('\n\tСтавим i3...\n\n')
-        os.system('pacman -S i3 i3-wm i3status  dmenu  --noconfirm')
+        os.system('pacman -S xorg-server xorg-xinit i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfirm')
+        os.system('pacman -S bluez bluez-utils pulseaudio-bluetooth blueman --noconfirm')
+        os.system('pacman -S i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls --noconfirm')
         os.system('pacman -Sy nitrogen  --noconfirm')
 
         print('\n\tСтавим gdm...\n\n')
@@ -354,6 +410,7 @@ class ArchLinuxInstall(object):
 
 if __name__ == '__main__':
     v = input('''
+    Запускать от Рута, иначе могут быть проблемы!!!
     Введите вариант установки:
     1 - Установка первичной системы
     2 - Конечная установка и настройка
