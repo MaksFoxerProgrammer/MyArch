@@ -307,7 +307,7 @@ class ArchLinuxInstall(object):
         os.system('pacman -S libreoffice-still libreoffice-still-ru --noconfirm')
         os.system('pacman -S openssh --noconfirm')
         os.system('pacman -Sy --noconfirm')
-        os.system('sudo pacman -S --needed base-devel git wget yajl')
+        os.system('sudo pacman -S --needed base-devel git wget yajl --noconfirm')
         os.system('curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg')
         os.system('    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf')
         os.system('sudo pacman -Syu sublime-text --noconfirm')
