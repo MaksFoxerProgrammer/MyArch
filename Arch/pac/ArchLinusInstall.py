@@ -7,61 +7,25 @@ class ArchLinuxInstall(object):
     boot = '0'
     home = '0'
     sd = ''
-    user = ''
-    comp = ''
-    instforbase = [
-            'python3', 
-            'git', 
-            'base', 
-            'linux', 
-            'linux-firmware', 
-            'linux-headers', 
-            'dhcpcd', 
-            'which', 
-            'netctl', 
-            'inetutils', 
-            'base-devel', 
-            'wget', 
-            'linux-firmware', 
-            'nano', 
-            'wpa_supplicant', 
-            'dialog sudo'
-        ] 
-    
-    instfori3 = [
-            'i3', 
-            'i3-gaps', 
-            'base-devel', 
-            'rofi', 
-            'okular', 
-            'feh', 
-            'vim', 
-            'code', 
-            'picom', 
-            'kitty', 
-            'ranger', 
-            'git', 
-            'xdotool', 
-            'xautolock', 
-            'i3lock-color', 
-            'scrot', 
-            'imagemagick', 
-            'rxvt-unicode', 
-            'urxvt-perls', 
-            'xorg-server', 
-            'xorg-xinit'
-        ]
+    user = 'Maks'
+    comp = 'arch-linux'
 
+    base = 'python3 git base linux linux-firmware linux-headers dhcpcd which netctl inetutils base-devel wget linux-firmware nano wpa_supplicant dialog sudo'
+
+    i3 = 'xorg-server xorg-xinit i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls nitrogen i3status dmenu setxkbmap pavucontrol'
+
+    bltz = 'bluez bluez-utils pulseaudio-bluetooth blueman'
+    
     def inst(ar):
         rez = ' '
         for item in ar:
             rez = rez + item
         return rez
 
-os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfirm')
-        os.system('pacman -S bluez bluez-utils pulseaudio-bluetooth blueman --noconfirm')
-        os.system('pacman -S i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls --noconfirm')
-        os.system('pacman -Sy nitrogen  --noconfirm')
+#os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfirm')
+#        os.system('pacman -S bluez bluez-utils pulseaudio-bluetooth blueman --noconfirm')
+#        os.system('pacman -S i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls --noconfirm')
+#        os.system('pacman -Sy nitrogen  --noconfirm')
 
 
 
@@ -110,12 +74,12 @@ os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfi
         input('\n\n\tНажимте Enter для продолжения...')
 
 
-
+#
     def Base(self):
         os.system('clear')
         print('\tБазовая установка окружения\n\n')
         os.system('''
-        pacstrap /mnt ''' + self.instoforbase + '''
+        pacstrap /mnt ''' + self.base + '''
         genfstab -pU /mnt >> /mnt/etc/fstab''')
 
         print("""
@@ -157,8 +121,8 @@ os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfi
         ''')
         os.system('lsblk')
         self.sd = input("Введите раздел для grub (ошибки быть не должно, не предусмотрено!): ")
-        self.user = input("Введите имя пользователя (ошибки быть не должно, не предусмотрено!): ")
-        self.comp = input("Введите имя компьютера (ошибки быть не должно, не предусмотрено!): ")
+        # self.user = input("Введите имя пользователя (ошибки быть не должно, не предусмотрено!): ")
+        # self.comp = input("Введите имя компьютера (ошибки быть не должно, не предусмотрено!): ")
 
 
 
@@ -256,10 +220,9 @@ os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfi
         os.system('pacman -S xfce4 xfce4-goodies --noconfirm')
 
         print('\n\tСтавим i3...\n\n')
-        os.system('pacman -S xorg-server xorg-xinit i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfirm')
-        os.system('pacman -S bluez bluez-utils pulseaudio-bluetooth blueman --noconfirm')
-        os.system('pacman -S i3 i3-gaps base-devel rofi okular feh vim code picom kitty ranger git xdotool xautolock i3lock-color scrot imagemagick rxvt-unicode urxvt-perls --noconfirm')
-        os.system('pacman -Sy nitrogen  --noconfirm')
+        os.system('pacman -S ' + self.i3 + ' --noconfirm')
+        os.system('pacman -S ' + self.bltz + ' --noconfirm')
+        
 
         print('\n\tСтавим gdm...\n\n')
         os.system('pacman -S gdm --noconfirm')
@@ -323,7 +286,6 @@ os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfi
         print('\tСтавим утилиты...\n\n')
         os.system('''
         pacman -Sy exfat-utils ntfs-3g   --noconfirm
-        pacman -Sy exfat-utils ntfs-3g   --noconfirm
         pacman -Sy unzip unrar lha file-roller p7zip unace lrzip  --noconfirm
         pacman -S gvfs-afc gvfs-mtp --noconfirm
         pacman -S blueman --noconfirm
@@ -341,7 +303,7 @@ os.system('pacman -S i3-gaps i3status dmenu setxkbmap rofi pavucontrol --noconfi
         os.system('pacman -S telegram-desktop   --noconfirm')
         os.system('pacman -S spectacle flameshot --noconfirm')
         os.system('pacman -S firefox firefox-i18n-ru --noconfirm ')
-        os.system('pacman -S chromium --noconfirm')
+        # os.system('pacman -S chromium --noconfirm')
         os.system('pacman -S libreoffice-still libreoffice-still-ru --noconfirm')
         os.system('pacman -S openssh --noconfirm')
         os.system('pacman -Sy --noconfirm')
